@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2019-present",
-  "date": "2019-08-16T11:47:13.212Z",
+  "date": "2019-08-16T18:37:48.004Z",
   "describe": "",
   "description": "Creates a new function with a bound sequence of arguments. Compliant to 8 arguments.",
   "file": "simple-bind-x.js",
-  "hash": "da62a7fec960cef99f0d",
+  "hash": "720d232c18b40c25f7c8",
   "license": "MIT",
   "version": "1.0.0"
 }
@@ -158,6 +158,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/util-pusher-x/dist/util-pusher-x.esm.js
+// eslint-disable jsdoc/no-undefined-types
+// noinspection JSCommentMatchesSignature
+
+/**
+ * This pushes or concatenates into a new or existing array.
+ *
+ * @param {Array} arrayLike - The source.
+ * @param {number} [from=0] - The from source index.
+ * @param {Array} [target=[]] - The target array.
+ * @returns {*} The target array.
+ */
+// eslint-enable jsdoc/no-undefined-types
+var pusher = function pusher(arrayLike, from) {
+  var len = arrayLike.length;
+  /* eslint-disable-next-line prefer-rest-params */
+
+  var target = arguments.length > 2 ? arguments[2] : [];
+
+  for (var i = from || 0; i < len; i += 1) {
+    target[target.length] = arrayLike[i];
+  }
+
+  return target;
+};
+
+/* harmony default export */ var util_pusher_x_esm = (pusher);
+
+
+// CONCATENATED MODULE: ./dist/simple-bind-x.esm.js
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -166,10 +197,11 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+
 var ERROR_MESSAGE = 'bind called on incompatible ';
 var object = {};
 var ObjectCtr = object.constructor;
-var toStr = object.toString;
+var toStringTag = object.toString;
 var funcType = '[object Function]';
 var ZERO = 0;
 var argsOffset = 2;
@@ -179,74 +211,61 @@ var getMax = function getMax(a, b) {
 };
 
 var assertIsFunction = function assertIsFunction(value) {
-  if (typeof value !== 'function' && toStr.apply(value) !== funcType) {
+  if (typeof value !== 'function' && toStringTag.apply(value) !== funcType) {
     throw new TypeError(ERROR_MESSAGE + value);
   }
-};
-
-var pushAll = function pushAll(arrayLike, from) {
-  var len = arrayLike.length;
-  /* eslint-disable-next-line prefer-rest-params */
-
-  var target = arguments.length > 2 ? arguments[2] : [];
-
-  for (var i = from || ZERO; i < len; i += 1) {
-    target[target.length] = arrayLike[i];
-  }
-
-  return target;
 };
 
 var boundFns = [function zero(binder) {
   return function boundFn() {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments));
+    return binder.apply(this, util_pusher_x_esm(arguments));
   };
 }, function one(binder, boundLength) {
   return function boundFn(a) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a]));
   };
 }, function two(binder, boundLength) {
   return function boundFn(a, b) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b]));
   };
 }, function three(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c]));
   };
 }, function four(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d]));
   };
 }, function five(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e]));
   };
 }, function six(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f]));
   };
 }, function seven(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f, g) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f, g]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f, g]));
   };
 }, function eight(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f, g, h) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f, g, h]));
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f, g, h]));
   };
 }];
 
@@ -298,7 +317,7 @@ var getResult = function getResult(target, boundArgs) {
 // eslint-enable jsdoc/check-param-names
 
 
-var bind = function bind(target, thisArg) {
+var simple_bind_x_esm_bind = function bind(target, thisArg) {
   assertIsFunction(target);
   /* eslint-disable-next-line prefer-rest-params */
 
@@ -307,7 +326,7 @@ var bind = function bind(target, thisArg) {
 
   var binder = function binder() {
     /* eslint-disable-next-line prefer-rest-params */
-    var boundArgs = pushAll(arguments, ZERO, pushAll(bindArgs, argsOffset));
+    var boundArgs = util_pusher_x_esm(arguments, ZERO, util_pusher_x_esm(bindArgs, argsOffset));
     /* eslint-disable-next-line babel/no-invalid-this */
 
     return this instanceof bound ? getResult.apply(this, [target, boundArgs]) : target.apply(thisArg, boundArgs);
@@ -317,7 +336,7 @@ var bind = function bind(target, thisArg) {
   return bound;
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (bind);
+/* harmony default export */ var simple_bind_x_esm = __webpack_exports__["default"] = (simple_bind_x_esm_bind);
 
 
 

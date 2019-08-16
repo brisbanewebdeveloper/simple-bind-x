@@ -6,10 +6,11 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+import pusher from 'util-pusher-x';
 var ERROR_MESSAGE = 'bind called on incompatible ';
 var object = {};
 var ObjectCtr = object.constructor;
-var toStr = object.toString;
+var toStringTag = object.toString;
 var funcType = '[object Function]';
 var ZERO = 0;
 var argsOffset = 2;
@@ -19,74 +20,61 @@ var getMax = function getMax(a, b) {
 };
 
 var assertIsFunction = function assertIsFunction(value) {
-  if (typeof value !== 'function' && toStr.apply(value) !== funcType) {
+  if (typeof value !== 'function' && toStringTag.apply(value) !== funcType) {
     throw new TypeError(ERROR_MESSAGE + value);
   }
-};
-
-var pushAll = function pushAll(arrayLike, from) {
-  var len = arrayLike.length;
-  /* eslint-disable-next-line prefer-rest-params */
-
-  var target = arguments.length > 2 ? arguments[2] : [];
-
-  for (var i = from || ZERO; i < len; i += 1) {
-    target[target.length] = arrayLike[i];
-  }
-
-  return target;
 };
 
 var boundFns = [function zero(binder) {
   return function boundFn() {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments));
+    return binder.apply(this, pusher(arguments));
   };
 }, function one(binder, boundLength) {
   return function boundFn(a) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a]));
+    return binder.apply(this, pusher(arguments, boundLength, [a]));
   };
 }, function two(binder, boundLength) {
   return function boundFn(a, b) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b]));
   };
 }, function three(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c]));
   };
 }, function four(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c, d]));
   };
 }, function five(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c, d, e]));
   };
 }, function six(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c, d, e, f]));
   };
 }, function seven(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f, g) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f, g]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c, d, e, f, g]));
   };
 }, function eight(binder, boundLength) {
   /* eslint-disable-next-line max-params */
   return function boundFn(a, b, c, d, e, f, g, h) {
     /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
-    return binder.apply(this, pushAll(arguments, boundLength, [a, b, c, d, e, f, g, h]));
+    return binder.apply(this, pusher(arguments, boundLength, [a, b, c, d, e, f, g, h]));
   };
 }];
 
@@ -147,7 +135,7 @@ var bind = function bind(target, thisArg) {
 
   var binder = function binder() {
     /* eslint-disable-next-line prefer-rest-params */
-    var boundArgs = pushAll(arguments, ZERO, pushAll(bindArgs, argsOffset));
+    var boundArgs = pusher(arguments, ZERO, pusher(bindArgs, argsOffset));
     /* eslint-disable-next-line babel/no-invalid-this */
 
     return this instanceof bound ? getResult.apply(this, [target, boundArgs]) : target.apply(thisArg, boundArgs);
