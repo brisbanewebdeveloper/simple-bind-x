@@ -1,7 +1,7 @@
 const ERROR_MESSAGE = 'bind called on incompatible ';
 const object = {};
 const ObjectCtr = object.constructor;
-const toStr = object.toString;
+const toStringTag = object.toString;
 const funcType = '[object Function]';
 const ZERO = 0;
 const argsOffset = 2;
@@ -11,7 +11,7 @@ const getMax = function getMax(a, b) {
 };
 
 const assertIsFunction = function assertIsFunction(value) {
-  if (typeof value !== 'function' && toStr.apply(value) !== funcType) {
+  if (typeof value !== 'function' && toStringTag.apply(value) !== funcType) {
     throw new TypeError(ERROR_MESSAGE + value);
   }
 };
