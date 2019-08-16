@@ -2,9 +2,9 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2019-present",
-  "date": "2019-08-16T11:37:17.051Z",
+  "date": "2019-08-16T11:44:51.286Z",
   "describe": "",
-  "description": "Boilerplate for standard modules.",
+  "description": "Creates a new function with a bound sequence of arguments. Compliant to 8 arguments.",
   "file": "simple-bind-x.js",
   "hash": "da62a7fec960cef99f0d",
   "license": "MIT",
