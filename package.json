@@ -52,7 +52,7 @@
     "url": "https://github.com/Xotic750/simple-bind-x/issues"
   },
   "dependencies": {
-    "util-pusher-x": "^1.0.0"
+    "util-pusher-x": "^1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

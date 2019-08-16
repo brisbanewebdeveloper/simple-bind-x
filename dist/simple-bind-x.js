@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2019-present",
-  "date": "2019-08-16T18:37:48.004Z",
+  "date": "2019-08-16T19:08:15.460Z",
   "describe": "",
   "description": "Creates a new function with a bound sequence of arguments. Compliant to 8 arguments.",
   "file": "simple-bind-x.js",
-  "hash": "720d232c18b40c25f7c8",
+  "hash": "68bacd7c5025ad3e8c7b",
   "license": "MIT",
   "version": "1.0.0"
 }
@@ -149,18 +149,74 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var strValue = String.prototype.valueOf;
+var tryStringObject = function tryStringObject(value) {
+	try {
+		strValue.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+var toStr = Object.prototype.toString;
+var strClass = '[object String]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isString(value) {
+	if (typeof value === 'string') { return true; }
+	if (typeof value !== 'object') { return false; }
+	return hasToStringTag ? tryStringObject(value) : toStr.call(value) === strClass;
+};
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
+// CONCATENATED MODULE: ./node_modules/is-primitive-x/dist/is-primitive-x.esm.js
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * Returns true if the value is a primitive.
+ *
+ * @param {*} [val] - The value to test.
+ * @returns {boolean} True if a primitive, otherwise false..
+ */
+var isPrimitive = function isPrimitive(val) {
+  return _typeof(val) === 'object' ? val === null : typeof val !== 'function';
+};
+
+/* harmony default export */ var is_primitive_x_esm = (isPrimitive);
+
+
+// EXTERNAL MODULE: ./node_modules/is-string/index.js
+var is_string = __webpack_require__(0);
+var is_string_default = /*#__PURE__*/__webpack_require__.n(is_string);
+
 // CONCATENATED MODULE: ./node_modules/util-pusher-x/dist/util-pusher-x.esm.js
-// eslint-disable jsdoc/no-undefined-types
+
+
+var EMPTY_STRING = '';
+var split = EMPTY_STRING.split;
+var splitter = [EMPTY_STRING];
+
+var util_pusher_x_esm_getIterable = function getIterable(arrayLike) {
+  // noinspection JSUnresolvedFunction
+  return is_string_default()(arrayLike) ? split.apply(arrayLike, splitter) : arrayLike;
+}; // eslint-disable jsdoc/no-undefined-types
 // noinspection JSCommentMatchesSignature
 
 /**
@@ -172,20 +228,27 @@ __webpack_require__.r(__webpack_exports__);
  * @returns {*} The target array.
  */
 // eslint-enable jsdoc/no-undefined-types
-var pusher = function pusher(arrayLike, from) {
-  var len = arrayLike.length;
-  /* eslint-disable-next-line prefer-rest-params */
 
+
+var util_pusher_x_esm_pusher = function pusher(arrayLike, from) {
+  /* eslint-disable-next-line prefer-rest-params */
   var target = arguments.length > 2 ? arguments[2] : [];
 
-  for (var i = from || 0; i < len; i += 1) {
+  if (typeof arrayLike !== 'string' && is_primitive_x_esm(arrayLike)) {
+    return target;
+  }
+
+  var iterable = util_pusher_x_esm_getIterable(arrayLike);
+  var length = iterable.length;
+
+  for (var i = from || 0; i < length; i += 1) {
     target[target.length] = arrayLike[i];
   }
 
   return target;
 };
 
-/* harmony default export */ var util_pusher_x_esm = (pusher);
+/* harmony default export */ var util_pusher_x_esm = (util_pusher_x_esm_pusher);
 
 
 // CONCATENATED MODULE: ./dist/simple-bind-x.esm.js
