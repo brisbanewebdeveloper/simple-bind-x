@@ -1,5 +1,7 @@
+import hasWorkingBind from 'has-working-bind-x';
 import pusher from 'util-pusher-x';
 
+const {bind: nativeBind, call} = pusher;
 const ERROR_MESSAGE = 'bind called on incompatible ';
 const object = {};
 const ObjectCtr = object.constructor;
@@ -107,24 +109,7 @@ const getResult = function getResult(target, boundArgs) {
   return ObjectCtr(result) === result ? result : this;
 };
 
-// eslint-disable jsdoc/check-param-names
-// noinspection JSCommentMatchesSignature
-/**
- * The bind() method creates a new function that, when called, has its this
- * keyword set to the provided value, with a given sequence of arguments
- * preceding any provided when the new function is called.
- *
- * @param {Function} target - The target function.
- * @param {*} [thisArg] - The value to be passed as the this parameter to the target
- *  function when the bound function is called. The value is ignored if the
- *  bound function is constructed using the new operator.
- * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
- *  function when invoking the target function.
- * @throws {TypeError} If target is not a function.
- * @returns {Function} The bound function.
- */
-// eslint-enable jsdoc/check-param-names
-const bind = function bind(target, thisArg) {
+export const implementation = function bind(target, thisArg) {
   assertIsFunction(target);
   /* eslint-disable-next-line prefer-rest-params */
   const bindArgs = arguments;
@@ -143,4 +128,21 @@ const bind = function bind(target, thisArg) {
   return bound;
 };
 
-export default bind;
+/**
+ * The bind() method creates a new function that, when called, has its this
+ * keyword set to the provided value, with a given sequence of arguments
+ * preceding any provided when the new function is called.
+ *
+ * @function bind
+ * @param {Function} target - The target function.
+ * @param {*} [thisArg] - The value to be passed as the this parameter to the target
+ *  function when the bound function is called. The value is ignored if the
+ *  bound function is constructed using the new operator.
+ * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
+ *  function when invoking the target function.
+ * @throws {TypeError} If target is not a function.
+ * @returns {Function} The bound function.
+ */
+const $bind = hasWorkingBind ? call.bind(nativeBind) : implementation;
+
+export default $bind;

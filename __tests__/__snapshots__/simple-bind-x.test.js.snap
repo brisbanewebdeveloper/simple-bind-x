@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`#bind() throws if not a function 1`] = `"bind called on incompatible [object Object]"`;
+exports[`#bind() 0 throws if not a function 1`] = `"bind called on incompatible [object Object]"`;
+
+exports[`#bind() 1 throws if not a function 1`] = `"Bind must be called on a function"`;

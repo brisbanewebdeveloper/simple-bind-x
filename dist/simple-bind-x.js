@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2019-present",
-  "date": "2019-08-16T19:11:31.926Z",
+  "date": "2019-08-17T21:28:05.990Z",
   "describe": "",
   "description": "Creates a new function with a bound sequence of arguments. Compliant to 8 arguments.",
   "file": "simple-bind-x.js",
-  "hash": "68bacd7c5025ad3e8c7b",
+  "hash": "7ce4054e7b0775ca7cae",
   "license": "MIT",
   "version": "1.0.1"
 }
@@ -186,6 +186,80 @@ module.exports = function isString(value) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
+// CONCATENATED MODULE: ./node_modules/noop-x/dist/noop-x.esm.js
+/**
+ * This method returns undefined.
+ *
+ * @returns {undefined} Always undefined.
+ */
+var noop = function noop() {};
+/* eslint-disable-line lodash/prefer-noop */
+
+
+/* harmony default export */ var noop_x_esm = (noop);
+
+
+// CONCATENATED MODULE: ./node_modules/has-working-bind-x/dist/has-working-bind-x.esm.js
+
+var has_working_bind_x_esm_bind = noop_x_esm.bind;
+
+var test1 = function test1() {
+  var a1 = null;
+  var a2 = null;
+  var context = null;
+  var testThis = [];
+
+  var test1Fn = function test1Fn(arg1, arg2) {
+    /* eslint-disable-next-line babel/no-invalid-this */
+    context = this;
+    a1 = arg1;
+    a2 = arg2;
+    /* eslint-disable-next-line prefer-rest-params */
+
+    return arguments;
+  };
+
+  try {
+    var boundFn = has_working_bind_x_esm_bind.apply(test1Fn, [testThis, 1]);
+    var args = boundFn(2);
+    return boundFn.length === 1 && args.length === 2 && a1 === 1 && a2 === 2 && context === testThis;
+  } catch (e) {
+    return false;
+  }
+};
+
+var test2 = function test2() {
+  var a1 = null;
+  var a2 = null;
+  var context = null;
+  var oracle = [1, 2, 3];
+
+  var Ctr = function Ctr(arg1, arg2) {
+    a1 = arg1;
+    a2 = arg2;
+    context = this;
+    return oracle;
+  };
+
+  try {
+    var BoundFn = has_working_bind_x_esm_bind.apply(Ctr, [null]);
+    var returned = new BoundFn(1, 2);
+    return BoundFn.length === Ctr.length && returned === oracle && a1 === 1 && a2 === 2 && context !== oracle;
+  } catch (e) {
+    return false;
+  }
+};
+/**
+ * Indicates if the engine has a working bind function.
+ *
+ * @type {boolean}
+ */
+
+
+var isWorking = typeof has_working_bind_x_esm_bind === 'function' && test1() && test2();
+/* harmony default export */ var has_working_bind_x_esm = (isWorking);
+
+
 // CONCATENATED MODULE: ./node_modules/is-primitive-x/dist/is-primitive-x.esm.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -252,6 +326,7 @@ var util_pusher_x_esm_pusher = function pusher(arrayLike, from) {
 
 
 // CONCATENATED MODULE: ./dist/simple-bind-x.esm.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "implementation", function() { return implementation; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -261,6 +336,9 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
+var nativeBind = util_pusher_x_esm.bind,
+    call = util_pusher_x_esm.call;
 var ERROR_MESSAGE = 'bind called on incompatible ';
 var object = {};
 var ObjectCtr = object.constructor;
@@ -360,27 +438,9 @@ var getResult = function getResult(target, boundArgs) {
   /* eslint-disable-next-line babel/no-invalid-this,babel/new-cap */
 
   return ObjectCtr(result) === result ? result : this;
-}; // eslint-disable jsdoc/check-param-names
-// noinspection JSCommentMatchesSignature
+};
 
-/**
- * The bind() method creates a new function that, when called, has its this
- * keyword set to the provided value, with a given sequence of arguments
- * preceding any provided when the new function is called.
- *
- * @param {Function} target - The target function.
- * @param {*} [thisArg] - The value to be passed as the this parameter to the target
- *  function when the bound function is called. The value is ignored if the
- *  bound function is constructed using the new operator.
- * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
- *  function when invoking the target function.
- * @throws {TypeError} If target is not a function.
- * @returns {Function} The bound function.
- */
-// eslint-enable jsdoc/check-param-names
-
-
-var simple_bind_x_esm_bind = function bind(target, thisArg) {
+var implementation = function bind(target, thisArg) {
   assertIsFunction(target);
   /* eslint-disable-next-line prefer-rest-params */
 
@@ -398,8 +458,24 @@ var simple_bind_x_esm_bind = function bind(target, thisArg) {
   bound = getBoundFn([binder, target, bindArgs]);
   return bound;
 };
+/**
+ * The bind() method creates a new function that, when called, has its this
+ * keyword set to the provided value, with a given sequence of arguments
+ * preceding any provided when the new function is called.
+ *
+ * @function bind
+ * @param {Function} target - The target function.
+ * @param {*} [thisArg] - The value to be passed as the this parameter to the target
+ *  function when the bound function is called. The value is ignored if the
+ *  bound function is constructed using the new operator.
+ * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
+ *  function when invoking the target function.
+ * @throws {TypeError} If target is not a function.
+ * @returns {Function} The bound function.
+ */
 
-/* harmony default export */ var simple_bind_x_esm = __webpack_exports__["default"] = (simple_bind_x_esm_bind);
+var $bind = has_working_bind_x_esm ? call.bind(nativeBind) : implementation;
+/* harmony default export */ var simple_bind_x_esm = __webpack_exports__["default"] = ($bind);
 
 
 

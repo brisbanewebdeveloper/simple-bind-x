@@ -6,7 +6,10 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+import hasWorkingBind from 'has-working-bind-x';
 import pusher from 'util-pusher-x';
+var nativeBind = pusher.bind,
+    call = pusher.call;
 var ERROR_MESSAGE = 'bind called on incompatible ';
 var object = {};
 var ObjectCtr = object.constructor;
@@ -106,27 +109,9 @@ var getResult = function getResult(target, boundArgs) {
   /* eslint-disable-next-line babel/no-invalid-this,babel/new-cap */
 
   return ObjectCtr(result) === result ? result : this;
-}; // eslint-disable jsdoc/check-param-names
-// noinspection JSCommentMatchesSignature
+};
 
-/**
- * The bind() method creates a new function that, when called, has its this
- * keyword set to the provided value, with a given sequence of arguments
- * preceding any provided when the new function is called.
- *
- * @param {Function} target - The target function.
- * @param {*} [thisArg] - The value to be passed as the this parameter to the target
- *  function when the bound function is called. The value is ignored if the
- *  bound function is constructed using the new operator.
- * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
- *  function when invoking the target function.
- * @throws {TypeError} If target is not a function.
- * @returns {Function} The bound function.
- */
-// eslint-enable jsdoc/check-param-names
-
-
-var bind = function bind(target, thisArg) {
+export var implementation = function bind(target, thisArg) {
   assertIsFunction(target);
   /* eslint-disable-next-line prefer-rest-params */
 
@@ -144,7 +129,23 @@ var bind = function bind(target, thisArg) {
   bound = getBoundFn([binder, target, bindArgs]);
   return bound;
 };
+/**
+ * The bind() method creates a new function that, when called, has its this
+ * keyword set to the provided value, with a given sequence of arguments
+ * preceding any provided when the new function is called.
+ *
+ * @function bind
+ * @param {Function} target - The target function.
+ * @param {*} [thisArg] - The value to be passed as the this parameter to the target
+ *  function when the bound function is called. The value is ignored if the
+ *  bound function is constructed using the new operator.
+ * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
+ *  function when invoking the target function.
+ * @throws {TypeError} If target is not a function.
+ * @returns {Function} The bound function.
+ */
 
-export default bind;
+var $bind = hasWorkingBind ? call.bind(nativeBind) : implementation;
+export default $bind;
 
 //# sourceMappingURL=simple-bind-x.esm.js.map
