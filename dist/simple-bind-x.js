@@ -2,13 +2,13 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2019-present",
-  "date": "2019-08-20T12:32:23.414Z",
+  "date": "2019-08-20T18:57:23.993Z",
   "describe": "",
   "description": "Creates a new function with a bound sequence of arguments. Compliant to 8 arguments.",
   "file": "simple-bind-x.js",
-  "hash": "7ce4054e7b0775ca7cae",
+  "hash": "87df3aa84f897af2daac",
   "license": "MIT",
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
 */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -280,16 +280,40 @@ var isPrimitive = function isPrimitive(val) {
 var is_string = __webpack_require__(0);
 var is_string_default = /*#__PURE__*/__webpack_require__.n(is_string);
 
+// CONCATENATED MODULE: ./node_modules/has-boxed-string-x/dist/has-boxed-string-x.esm.js
+var string = 'a';
+var boxedString = {}.constructor(string);
+/**
+ * Check failure of by-index access of string characters (IE < 9)
+ * and failure of `0 in boxedString` (Rhino).
+ *
+ * `true` if no failure; otherwise `false`.
+ *
+ * @type boolean
+ */
+
+var hasBoxed = boxedString[0] === string && 0 in boxedString;
+/* harmony default export */ var has_boxed_string_x_esm = (hasBoxed);
+
+
 // CONCATENATED MODULE: ./node_modules/util-pusher-x/dist/util-pusher-x.esm.js
+
+
 
 
 var EMPTY_STRING = '';
 var split = EMPTY_STRING.split;
-var splitter = [EMPTY_STRING];
-
+var max = Math.max;
+var util_pusher_x_esm_bind = is_primitive_x_esm.bind,
+    call = is_primitive_x_esm.call;
+var stringSplit = function stringSplit(string, pattern) {
+  // noinspection JSUnresolvedFunction
+  return split.call(string, pattern);
+};
+var $split = has_working_bind_x_esm ? util_pusher_x_esm_bind.call(call, split) : stringSplit;
 var util_pusher_x_esm_getIterable = function getIterable(arrayLike) {
   // noinspection JSUnresolvedFunction
-  return is_string_default()(arrayLike) ? split.apply(arrayLike, splitter) : arrayLike;
+  return is_string_default()(arrayLike) ? $split(arrayLike, EMPTY_STRING) : arrayLike;
 }; // eslint-disable jsdoc/no-undefined-types
 // noinspection JSCommentMatchesSignature
 
@@ -303,7 +327,6 @@ var util_pusher_x_esm_getIterable = function getIterable(arrayLike) {
  */
 // eslint-enable jsdoc/no-undefined-types
 
-
 var util_pusher_x_esm_pusher = function pusher(arrayLike, from) {
   /* eslint-disable-next-line prefer-rest-params */
   var target = arguments.length > 2 ? arguments[2] : [];
@@ -312,10 +335,10 @@ var util_pusher_x_esm_pusher = function pusher(arrayLike, from) {
     return target;
   }
 
-  var iterable = util_pusher_x_esm_getIterable(arrayLike);
+  var iterable = has_boxed_string_x_esm ? arrayLike : util_pusher_x_esm_getIterable(arrayLike);
   var length = iterable.length;
 
-  for (var i = from || 0; i < length; i += 1) {
+  for (var i = max(0, from) || 0; i < length; i += 1) {
     target[target.length] = arrayLike[i];
   }
 
@@ -338,7 +361,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var nativeBind = util_pusher_x_esm.bind,
-    call = util_pusher_x_esm.call;
+    simple_bind_x_esm_call = util_pusher_x_esm.call;
 var ERROR_MESSAGE = 'bind called on incompatible ';
 var object = {};
 var ObjectCtr = object.constructor;
@@ -474,7 +497,7 @@ var implementation = function bind(target, thisArg) {
  * @returns {Function} The bound function.
  */
 
-var $bind = has_working_bind_x_esm ? call.bind(nativeBind) : implementation;
+var $bind = has_working_bind_x_esm ? simple_bind_x_esm_call.bind(nativeBind) : implementation;
 /* harmony default export */ var simple_bind_x_esm = __webpack_exports__["default"] = ($bind);
 
 
